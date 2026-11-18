@@ -7,7 +7,7 @@ namespace Application.Dtos
     public  class LoginRequestModel
     {
         public string Email { get; set; } = default!;
-        public string pass { get; set; } = default!;
+        public string PassWord { get; set; } = default!;
 
     }
 

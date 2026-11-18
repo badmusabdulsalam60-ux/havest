@@ -8,7 +8,8 @@ namespace Application.Dtos
     public  class FarmerDto
     {
         public Guid UserId { get; set; }
-        public string Farm { get; set; } = string.Empty;
+
+        public string FarmName { get; set; } = string.Empty;
         public string FarmAddress { get; set; } = string.Empty;
         public string State { get; set; } = string.Empty;
         public bool IsVerified { get; set; }

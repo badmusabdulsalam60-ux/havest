@@ -1,0 +1,56 @@
+@host = http://localhost:5212
+
+### Register farmer
+POST {{host}}/api/auth/register/farmer
+Content-Type: application/json
+
+{ "firstName": "Ada", "lastName": "Obi", "userName": "adafarm", "email": "ada@farm.com", "password": "Pass1234",
+  "phoneNumber": "08011111111", "farmName": "Ada Farms", "farmAddress": "12 Farm Road", "state": "Kwara" }
+
+### Register buyer
+POST {{host}}/api/auth/register/buyer
+Content-Type: application/json
+
+{ "firstName": "Tunde", "lastName": "Bello", "userName": "tundebuys", "email": "tunde@buy.com", "password": "Pass1234",
+  "phoneNumber": "08022222222", "buyerType": "Business", "businessName": "Tunde Foods" }
+
+### Login (copy the token into @token)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "ada@farm.com", "password": "Pass1234" }
+
+###
+@token = PASTE_TOKEN_HERE
+
+### Crops
+GET {{host}}/api/crops
+
+### Farmer creates a listing
+POST {{host}}/api/producelistings
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "cropId": "c0000000-0000-0000-0000-000000000002", "title": "Fresh tomatoes", "description": "Harvest in 3 weeks",
+  "pricePerUnit": 500, "unit": "kg", "quantity": 200, "availableFrom": "2026-12-15T00:00:00Z" }
+
+### Buyer searches
+GET {{host}}/api/producelistings?search=tomato
+
+### Buyer reserves
+POST {{host}}/api/reservations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "produceListingId": "LISTING_ID", "quantity": 50 }
+
+### Farmer accepts (or /reject)
+PUT {{host}}/api/reservations/RESERVATION_ID/accept
+Authorization: Bearer {{token}}
+
+### Order status
+PUT {{host}}/api/orders/ORDER_ID/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "status": "Preparing" }
